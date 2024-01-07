@@ -71,6 +71,7 @@ let windows_paging_count = 0;
 const graphics_draw_queue = [];
 let request_timer = null;
 let request_timer_interval = null;
+let min_timer_interval = 1;
 let resize_timer = null;
 let retry_timer = null;
 const perform_paging = true;
@@ -293,6 +294,9 @@ function glkote_init(iface) {
             glkote_log('Transcript recording active: session ' + recording_state.sessionId + ' "' + recording_state.label + '", destination ' + recording_handler_url);
         }
     }
+
+    if (iface.min_timer_interval > 0)
+        min_timer_interval = iface.min_timer_interval;
 
     if (iface.debug_commands) {
         let debugmod = window.GiDebug;
@@ -1531,7 +1535,7 @@ function accept_timerrequest(arg) {
     }
     else {
         /* Start a new timer. */
-        request_timer_interval = arg;
+        request_timer_interval = Math.max(arg, min_timer_interval);
         request_timer = window.setTimeout(evhan_timer_event, request_timer_interval);
     }
 }
