@@ -146,6 +146,7 @@
 .BufferWindow .Input {
   font-family: Palatino, Georgia, "Times New Roman", Times, serif;
   font-size: 15px;
+  line-height: 1.4;
 }
 
 .GridWindow .Input {
